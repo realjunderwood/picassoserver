@@ -370,7 +370,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
 
           console.log("total contours:", allContours.length);
 
-          var commandString = "";
+          var commandString = "U ";
           for (i = 0; i < allContours.length; i++) {
             commandString +=
               allContours[i][0].x1 + " " + allContours[i][0].y1 + " ";
