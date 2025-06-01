@@ -238,35 +238,65 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
   };
 
   var buildContour = function (startingEdge, edges, usedEdges) {
-    var contour = [startingEdge];
+    var contour = [];
     var curEdge = startingEdge;
     usedEdges.add(startingEdge);
 
+    // Helper to get direction vector as a normalized string
+    function getDirection(edge) {
+      var dx = edge.x2 - edge.x1;
+      var dy = edge.y2 - edge.y1;
+      var length = Math.sqrt(dx * dx + dy * dy);
+      return length === 0
+        ? "0,0"
+        : (dx / length).toFixed(3) + "," + (dy / length).toFixed(3);
+    }
+
+    var mergedEdge = { ...curEdge };
+    var curDir = getDirection(curEdge);
+
     while (true) {
       var nextEdge = null;
+      var nextEdgeIndex = -1;
+      var reverse = false;
 
       for (var i = 0; i < edges.length; i++) {
         var edge = edges[i];
         if (usedEdges.has(edge)) continue;
 
-        // Connects to curedge's endpoint?
-        if (edge.x1 == curEdge.x2 && edge.y1 == curEdge.y2) {
+        if (edge.x1 === curEdge.x2 && edge.y1 === curEdge.y2) {
           nextEdge = edge;
+          nextEdgeIndex = i;
           break;
-        } else if (edge.x2 == curEdge.x2 && edge.y2 == curEdge.y2) {
-          // reverse edge to maintain direction
+        } else if (edge.x2 === curEdge.x2 && edge.y2 === curEdge.y2) {
           nextEdge = { x1: edge.x2, y1: edge.y2, x2: edge.x1, y2: edge.y1 };
+          nextEdgeIndex = i;
+          reverse = true;
           break;
         }
       }
 
-      if (!nextEdge) break; // No more connected edges
+      if (!nextEdge) break;
 
-      contour.push(nextEdge);
-      usedEdges.add(nextEdge);
+      var nextDir = getDirection(nextEdge);
+
+      if (nextDir === curDir) {
+        // Extend the current merged edge
+        mergedEdge.x2 = nextEdge.x2;
+        mergedEdge.y2 = nextEdge.y2;
+      } else {
+        // Push current and start new merged edge
+        contour.push({ ...mergedEdge });
+        mergedEdge = { ...nextEdge };
+        curDir = nextDir;
+      }
+
+      usedEdges.add(edges[nextEdgeIndex]);
       curEdge = nextEdge;
     }
 
+    // Push the final merged edge
+    contour.push(mergedEdge);
     return contour;
   };
 
@@ -340,20 +370,25 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
 
           console.log("total contours:", allContours.length);
 
+          commandString = "";
           for (i = 0; i < allContours.length; i++) {
             console.log("PENDOWN");
+            commandString += "D ";
+            commandString += allContours[i][0].x1 + " " + allContours[i][0].y1;
             for (var j = 0; j < allContours[i].length; j++) {
-              console.log(
-                allContours[i][j].x1 +
-                  "," +
-                  allContours[i][j].y1 +
-                  " to " +
-                  allContours[i][j].x2 +
-                  "," +
-                  allContours[i][j].y2
-              );
+              commandString +=
+                allContours[i][0].x2 + " " + allContours[i][0].y2;
+              // console.log(
+              //   allContours[i][j].x1 +
+              //     "," +
+              //     allContours[i][j].y1 +
+              //     " to " +
+              //     allContours[i][j].x2 +
+              //     "," +
+              //     allContours[i][j].y2
+              // );
             }
-            console.log("PENUP");
+            console.log("U");
           }
 
           getColorInfo($scope.palette); // adds hex and CMYK values for display
