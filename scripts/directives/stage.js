@@ -21,8 +21,8 @@ angular.module('pbnApp')
 		canvas.addEventListener('click', function(event) {
 		    if (scope.step == 'select') {
 			var rect = canvas.getBoundingClientRect();
-			var x = event.clientX - rect.left;
-			var y = event.clientY - rect.top;
+			var x = (event.clientX - rect.left) / 4;
+			var y = (event.clientY - rect.top) / 4;
 			
 			var pixels = { r: [], g: [], b: [] };
 			for (var xNear = x - 3; xNear <= x + 3; xNear ++) {
