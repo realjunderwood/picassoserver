@@ -390,6 +390,10 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
             }
             console.log("U");
           }
+          $http
+            .post("/api/upload", { text: commandString })
+            .then((response) => console.log(response.data))
+            .catch((err) => console.error(err));
 
           getColorInfo($scope.palette); // adds hex and CMYK values for display
           $scope.step = "result";
