@@ -372,7 +372,6 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
 
           var commandString = "";
           for (i = 0; i < allContours.length; i++) {
-            console.log("PENDOWN");
             commandString += "D ";
             commandString += allContours[i][0].x1 + " " + allContours[i][0].y1;
             for (var j = 0; j < allContours[i].length; j++) {
@@ -388,8 +387,9 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
               //     allContours[i][j].y2
               // );
             }
-            console.log("U");
+            commandString += " U ";
           }
+          console.log(commandString);
           $http
             .post("/api/upload", { text: commandString })
             .then((response) => console.log(response.data))
