@@ -370,7 +370,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope) {
 
           console.log("total contours:", allContours.length);
 
-          commandString = "";
+          var commandString = "";
           for (i = 0; i < allContours.length; i++) {
             console.log("PENDOWN");
             commandString += "D ";
