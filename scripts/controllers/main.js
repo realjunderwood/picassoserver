@@ -13,7 +13,7 @@
  * # MainCtrl
  * Controller of the pbnApp
  */
-angular.module("pbnApp").controller("MainCtrl", function ($scope) {
+angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
   $scope.step = "load";
   $scope.view = "";
   $scope.status = "";
