@@ -23,6 +23,8 @@ angular.module('pbnApp')
 			var rect = canvas.getBoundingClientRect();
 			var x = (event.clientX - rect.left) / 4;
 			var y = (event.clientY - rect.top) / 4;
+			var displayX = event.clientX - rect.left;
+			var displayY = event.clientY - rect.top;
 			
 			var pixels = { r: [], g: [], b: [] };
 			for (var xNear = x - 3; xNear <= x + 3; xNear ++) {
@@ -43,8 +45,8 @@ angular.module('pbnApp')
 			    return array.reduce(function(a, b) {return a + b;}, 0) / array.length;
 			};
 			var color = {
-			    x: x,
-			    y: y,
+			    x: displayX,
+			    y: displayY,
 			    r: Math.round(mean(pixels.r)),
 			    g: Math.round(mean(pixels.g)),
 			    b: Math.round(mean(pixels.b))
