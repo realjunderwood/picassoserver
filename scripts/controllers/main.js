@@ -376,7 +376,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
             commandString += allContours[i][0].x1 + " " + allContours[i][0].y1;
             for (var j = 0; j < allContours[i].length; j++) {
               commandString +=
-                allContours[i][0].x2 + " " + allContours[i][0].y2;
+                allContours[i][0].x2 + " " + allContours[i][0].y2 + " ";
               // console.log(
               //   allContours[i][j].x1 +
               //     "," +
@@ -387,7 +387,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
               //     allContours[i][j].y2
               // );
             }
-            commandString += " U ";
+            commandString += "U ";
           }
           console.log(commandString);
           $http
