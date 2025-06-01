@@ -336,7 +336,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
                   x1: j + 0.5, // Between columns j and j+1
                   y1: i, // At row i
                   x2: j + 0.5,
-                  y2: i + 1, // Spans to next row
+                  y2: i + 0.5, // Spans to next row
                 });
               }
 
@@ -345,7 +345,7 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
                 edges.push({
                   x1: j, // At column j
                   y1: i + 0.5, // Between rows i and i+1
-                  x2: j + 1, // Spans to next column
+                  x2: j + 0.5, // Spans to next column
                   y2: i + 0.5,
                 });
               }
