@@ -190,6 +190,8 @@ a.btn {
 
 canvas {
     position: absolute;
+    transform: scale(4);
+    transform-origin: top left;
 }
 
 .sample-point {
