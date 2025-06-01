@@ -374,7 +374,8 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
           for (i = 0; i < allContours.length; i++) {
             commandString += "D ";
             console.log("sigma sigma on the wall");
-            commandString += allContours[i][0].x1 + " " + allContours[i][0].y1;
+            commandString +=
+              allContours[i][0].x1 + " " + allContours[i][0].y1 + " ";
             for (var j = 0; j < allContours[i].length; j++) {
               commandString +=
                 allContours[i][0].x2 + " " + allContours[i][0].y2 + " ";
