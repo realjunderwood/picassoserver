@@ -334,18 +334,18 @@ angular.module("pbnApp").controller("MainCtrl", function ($scope, $http) {
               if (matSmooth[i][j] != matSmooth[i][j + 1]) {
                 edges.push({
                   x1: j + 0.5, // Between columns j and j+1
-                  y1: i, // At row i
+                  y1: i - 0.25, // At row i
                   x2: j + 0.5,
-                  y2: i + 0.5, // Spans to next row
+                  y2: i + 0.25, // Spans to next row
                 });
               }
 
               // Check below neighbor
               if (matSmooth[i][j] != matSmooth[i + 1][j]) {
                 edges.push({
-                  x1: j, // At column j
+                  x1: j - 0.25, // At column j
                   y1: i + 0.5, // Between rows i and i+1
-                  x2: j + 0.5, // Spans to next column
+                  x2: j + 0.25, // Spans to next column
                   y2: i + 0.5,
                 });
               }
